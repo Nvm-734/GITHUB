@@ -1,0 +1,16 @@
+GIT Topic:
+what is purpose of git init??
+The command git init creates a new, empty Git repository or reinitializes an existing one. It's the first command you use to begin tracking a project with Git.
+
+How It Works
+When you run git init in a directory, Git creates a hidden .git folder inside it. This folder is the heart of the repository and contains all the necessary files and subdirectories to manage the project's version history, including:
+
+Object database: Stores your file changes and commits.
+
+Hooks: Scripts that Git can run automatically at certain points.
+
+References: Pointers to commits, such as branches and tags.
+
+After running git init, the directory is now a Git repository. You can then start adding files to the staging area with git add and saving their changes with git commit
+
+
