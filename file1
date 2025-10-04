@@ -1,0 +1,26 @@
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+
+public class GitPushExample {
+    public static void main(String[] args) {
+        try {
+            // Open the local repository
+            Git git = Git.open(new java.io.File("/path/to/your/repo"));
+
+            // Checkout main branch
+            git.checkout().setName("main").call();
+
+            // Merge feature branch into main
+            git.merge()
+               .include(git.getRepository().resolve("feature-branch"))
+               .call();
+
+            // Push changes to remote
+            git.push().setRemote("origin").call();
+
+            System.out.println("Feature branch merged and pushed to main.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
