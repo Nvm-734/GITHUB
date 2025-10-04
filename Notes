@@ -13,4 +13,47 @@ References: Pointers to commits, such as branches and tags.
 
 After running git init, the directory is now a Git repository. You can then start adding files to the staging area with git add and saving their changes with git commit
 
+Mechanism of Pull before push:
+Pulling before pushing (`git pull` before `git push`) is **best practice** in a collaborative Git workflow to ensure your local repository is **up-to-date** with the remote repository before sharing your changes.
 
+This simple rule is primarily used to prevent merge conflicts and maintain a clean, linear project history.
+
+---
+
+## What Happens When You Push Without Pulling
+
+When you're working on a project with others, the remote repository (like GitHub, GitLab, or Bitbucket) is constantly changing as your teammates push their own work.
+
+1.  **You make local commits** (Commits A, B).
+2.  **A teammate makes and pushes commits** to the remote (Commits X, Y).
+3.  **You try to push your commits** (A, B) using `git push`.
+
+Because the remote branch now contains commits (X, Y) that your local branch does **not** have, your push will fail with a **"non-fast-forward" error**.
+
+Git refuses to push because doing so would overwrite or ignore the commits (X, Y) that your teammate added, forcing you to resolve the divergence. Git's philosophy is: **"You must first integrate the new remote work before I'll let you add your work on top of it."**
+
+---
+
+## Why `git pull` Solves the Problem
+
+The `git pull` command is a shortcut for two actions: `git fetch` followed by `git merge` (or `git rebase`).
+
+| Command | Action | Effect |
+| :--- | :--- | :--- |
+| **`git pull`** | **Fetch** + **Merge** (or **Rebase**) | Downloads the remote commits (X, Y) and integrates them with your local commits (A, B). |
+
+By running `git pull` before `git push`:
+
+1.  **You download the new remote commits (X, Y).**
+2.  **You integrate those commits with your local work.**
+    * If no files conflict, Git performs a **Fast-Forward** or **Merge Commit** automatically.
+    * If you changed the *same lines* of the *same files* as your teammate, Git pauses and forces you to manually **resolve the merge conflicts**.
+3.  **Your local history is now unified** (Remote X, Y, followed by your A, B).
+4.  **You can now safely `git push`.** The remote repository accepts the push because your local history is a direct descendant of the remote history.
+
+In short, **pulling first forces you to handle any potential conflicts locally, on your machine, before you upload your changes.** This is much cleaner and safer for the shared remote repository.
+
+---
+
+For a visual guide on these commands, check out this video: [Git Push Pull Tutorial](https://www.youtube.com/watch?v=qt-3YcWxCzQ).
+http://googleusercontent.com/youtube_content/0
